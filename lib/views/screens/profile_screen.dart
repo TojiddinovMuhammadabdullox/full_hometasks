@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -36,29 +37,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     radius: 40,
                     backgroundImage: _image != null
                         ? FileImage(_image!)
-                        : NetworkImage(
-                            'https://via.placeholder.com/150'), // Placeholder image
+                        : const NetworkImage(
+                            'https://via.placeholder.com/150'),
+                            
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '$_name $_surname',
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     Text('Phone: $_phoneNumber'),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _editProfile(context);
               },
-              child: Text('Edit Profile'),
+              child: const Text('Edit Profile'),
             ),
           ],
         ),
@@ -92,10 +94,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Edit Profile'),
-                  SizedBox(height: 20),
+                  const Text('Edit Profile'),
+                  const SizedBox(height: 20),
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Name',
                     ),
                     onChanged: (value) {
@@ -105,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Surname',
                     ),
                     onChanged: (value) {
@@ -115,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Phone Number',
                     ),
                     onChanged: (value) {
@@ -124,12 +126,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       });
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Save'),
+                    child: const Text('Save'),
                   ),
                 ],
               ),

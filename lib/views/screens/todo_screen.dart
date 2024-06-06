@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TodoScreen extends StatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
+  const TodoScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _TodoScreenState createState() => _TodoScreenState();
 }
 
@@ -24,7 +25,7 @@ class _TodoScreenState extends State<TodoScreen> {
           return ListTile(
             title: Text(todo),
             trailing: IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 _deleteTodoDialog(index);
               },
