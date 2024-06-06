@@ -8,54 +8,26 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  final List<Map<String, dynamic>> _todos = [];
+  final List<String> _todos = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Todo"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              _showResults();
-            },
-          ),
-        ],
+        title: const Text("ToDo"),
       ),
       body: ListView.builder(
         itemCount: _todos.length,
         itemBuilder: (context, index) {
           final todo = _todos[index];
           return ListTile(
-            title: Text(
-              todo['title'],
-              style: TextStyle(
-                decoration: todo['isCompleted']
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-              ),
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Checkbox(
-                  value: todo['isCompleted'],
-                  onChanged: (value) {
-                    setState(() {
-                      todo['isCompleted'] = value!;
-                    });
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _deleteTodoDialog(index);
-                  },
-                ),
-              ],
+            title: Text(todo),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                _deleteTodoDialog(index);
+              },
             ),
             onTap: () {
               _editTodoDialog(todo, index);
@@ -71,24 +43,24 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   void _addTodoDialog() {
-    String title = '';
+    String todo = '';
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add Todo'),
+          title: const Text('Add ToDo'),
           content: TextField(
             onChanged: (value) {
-              title = value;
+              todo = value;
             },
-            decoration: const InputDecoration(hintText: "Todo title"),
+            decoration: const InputDecoration(hintText: "ToDo content"),
           ),
           actions: [
             TextButton(
               onPressed: () {
-                if (title.isNotEmpty) {
+                if (todo.isNotEmpty) {
                   setState(() {
-                    _todos.add({'title': title, 'isCompleted': false});
+                    _todos.add(todo);
                   });
                 }
                 Navigator.of(context).pop();
@@ -101,28 +73,26 @@ class _TodoScreenState extends State<TodoScreen> {
     );
   }
 
-  void _editTodoDialog(Map<String, dynamic> todo, int index) {
-    String title = todo['title'];
+  void _editTodoDialog(String oldTodo, int index) {
+    String todo = oldTodo;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Edit Todo'),
+          title: const Text('Edit ToDo'),
           content: TextField(
-            controller: TextEditingController(text: title),
+            controller: TextEditingController(text: oldTodo),
             onChanged: (value) {
-              title = value;
+              todo = value;
             },
-            decoration: const InputDecoration(hintText: "Todo title"),
+            decoration: const InputDecoration(hintText: "ToDo content"),
           ),
           actions: [
             TextButton(
               onPressed: () {
-                if (title.isNotEmpty) {
-                  setState(() {
-                    _todos[index]['title'] = title;
-                  });
-                }
+                setState(() {
+                  _todos[index] = todo;
+                });
                 Navigator.of(context).pop();
               },
               child: const Text('Save'),
@@ -138,8 +108,8 @@ class _TodoScreenState extends State<TodoScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Delete Todo'),
-          content: const Text('Are you sure you want to delete this todo?'),
+          title: const Text('Delete ToDo'),
+          content: const Text('Are you sure you want to delete this ToDo?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -150,28 +120,11 @@ class _TodoScreenState extends State<TodoScreen> {
               },
               child: const Text('Delete'),
             ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showResults() {
-    int completed = _todos.where((todo) => todo['isCompleted']).length;
-    int notCompleted = _todos.length - completed;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Todo Results'),
-          content: Text('Completed: $completed\nNot Completed: $notCompleted'),
-          actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close'),
+              child: const Text('Cancel'),
             ),
           ],
         );

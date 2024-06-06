@@ -73,15 +73,15 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  void _editNoteDialog(String note, int index) {
-    TextEditingController controller = TextEditingController(text: note);
+  void _editNoteDialog(String oldNote, int index) {
+    String note = oldNote;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Edit Note'),
           content: TextField(
-            controller: controller,
+            controller: TextEditingController(text: oldNote),
             onChanged: (value) {
               note = value;
             },
@@ -90,11 +90,9 @@ class _NotesScreenState extends State<NotesScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                if (note.isNotEmpty) {
-                  setState(() {
-                    _notes[index] = note;
-                  });
-                }
+                setState(() {
+                  _notes[index] = note;
+                });
                 Navigator.of(context).pop();
               },
               child: const Text('Save'),
@@ -121,6 +119,12 @@ class _NotesScreenState extends State<NotesScreen> {
                 Navigator.of(context).pop();
               },
               child: const Text('Delete'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
             ),
           ],
         );

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:full_hometasks/views/screens/notes_screen.dart';
-import 'package:full_hometasks/views/screens/profile_screen.dart';
-import 'todo_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,8 +20,7 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               title: const Text("Profile"),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => const ProfileScreen()));
+                Navigator.pushNamed(context, '/profile');
               },
             ),
           ],
@@ -41,10 +37,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const TodoScreen()),
-                );
+                Navigator.pushNamed(context, '/todo');
               },
               child: Card(
                 child: Center(
@@ -55,10 +48,7 @@ class HomeScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NotesScreen()),
-                );
+                Navigator.pushNamed(context, '/notes');
               },
               child: Card(
                 child: Center(

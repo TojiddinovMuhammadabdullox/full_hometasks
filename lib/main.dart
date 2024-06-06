@@ -3,6 +3,8 @@ import 'package:full_hometasks/views/screens/courses_screen.dart';
 import 'package:full_hometasks/views/screens/home_screen.dart';
 import 'package:full_hometasks/views/screens/profile_screen.dart';
 import 'package:full_hometasks/views/screens/settings_screen.dart';
+import 'package:full_hometasks/views/screens/notes_screen.dart';
+import 'package:full_hometasks/views/screens/todo_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -94,7 +96,7 @@ class _MyAppState extends State<MyApp> {
             : null,
         body: MediaQuery(
           data: MediaQuery.of(context)
-              .copyWith(textScaleFactor: _textScaleFactor),
+              .copyWith(textScaler: TextScaler.linear(_textScaleFactor)),
           child: Row(
             children: [
               if (MediaQuery.of(context).size.width >= 640)
@@ -118,7 +120,58 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
               Expanded(
-                child: _screens[_selectedIndex],
+                child: Navigator(
+                  key: GlobalKey<NavigatorState>(),
+                  onGenerateRoute: (settings) {
+                    WidgetBuilder builder;
+                    switch (settings.name) {
+                      case '/':
+                        builder = (BuildContext _) => _screens[_selectedIndex];
+                        break;
+                      case '/home':
+                        builder = (BuildContext _) => const HomeScreen();
+                        break;
+                      case '/profile':
+                        builder = (BuildContext _) => const ProfileScreen();
+                        break;
+                      case '/settings':
+                        builder = (BuildContext _) => SettingsScreen(
+                              isDarkMode: _isDarkMode,
+                              scaffoldColor: _scaffoldColor,
+                              textScaleFactor: _textScaleFactor,
+                              onDarkModeChanged: (bool value) {
+                                setState(() {
+                                  _isDarkMode = value;
+                                });
+                              },
+                              onScaffoldColorChanged: (Color color) {
+                                setState(() {
+                                  _scaffoldColor = color;
+                                });
+                              },
+                              onTextScaleFactorChanged: (double scale) {
+                                setState(() {
+                                  _textScaleFactor = scale;
+                                });
+                              },
+                            );
+                        break;
+                      case '/courses':
+                        builder = (BuildContext _) => const CoursesScreen();
+                        break;
+                      case '/notes':
+                        builder = (BuildContext _) => const NotesScreen();
+                        break;
+                      case '/todo':
+                        builder = (BuildContext _) => const TodoScreen();
+                        break;
+                      default:
+                        throw Exception('Invalid route: ${settings.name}');
+                    }
+                    return MaterialPageRoute(
+                        builder: builder, settings: settings);
+                  },
+                ),
               )
             ],
           ),
