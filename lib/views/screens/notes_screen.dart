@@ -70,7 +70,41 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addNoteDialog(context);
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Add Note'),
+                content: Column(
+                  children: [
+                    TextField(
+                      // controller: _textEditingController,
+                      decoration:
+                          const InputDecoration(hintText: "Note content"),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      final content = _textEditingController.text;
+                      if (content.isNotEmpty) {
+                        await _insertNote(content);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              );
+            },
+          );
         },
         child: const Icon(Icons.add),
       ),
@@ -78,22 +112,24 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   Future<void> _addNoteDialog(BuildContext context) async {
-    _textEditingController.clear();
-    await showDialog(
+    // _textEditingController.clear();
+    showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Add Note'),
-          content: TextField(
-            controller: _textEditingController,
-            autofocus:
-                true, // Ensure text field gets focus when dialog is shown
-            decoration: const InputDecoration(hintText: "Note content"),
+          content: Column(
+            children: [
+              TextField(
+                controller: _textEditingController,
+                decoration: const InputDecoration(hintText: "Note content"),
+              ),
+            ],
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: const Text('Cancel'),
             ),
@@ -102,7 +138,7 @@ class _NotesScreenState extends State<NotesScreen> {
                 final content = _textEditingController.text;
                 if (content.isNotEmpty) {
                   await _insertNote(content);
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 }
               },
               child: const Text('Add'),
