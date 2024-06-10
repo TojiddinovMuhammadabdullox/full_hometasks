@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:full_hometasks/service/http_serviceauth.dart';
+import 'package:full_hometasks/SERVICES/http_services.dart';
+import 'package:full_hometasks/views/screens/home.dart';
 import 'package:full_hometasks/views/screens/home_screen.dart';
 import 'package:full_hometasks/views/screens/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -23,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
+      //? Register
       setState(() {
         isLoading = true;
       });
@@ -33,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context,
           MaterialPageRoute(
             builder: (ctx) {
-              return const HomeScreen();
+              return const MyHomeApp();
             },
           ),
         );
@@ -90,6 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   onSaved: (newValue) {
+                    //? save email
                     email = newValue;
                   },
                 ),
@@ -109,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   onSaved: (newValue) {
+                    //? save password
                     password = newValue;
                   },
                 ),
@@ -133,13 +137,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   onSaved: (newValue) {
+                    //? save password confirm
                     passwordConfirm = newValue;
                   },
                 ),
                 const SizedBox(height: 20),
                 isLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
+                    : FilledButton(
                         onPressed: submit,
                         child: const Text("Ro'yxatdan O'tish"),
                       ),

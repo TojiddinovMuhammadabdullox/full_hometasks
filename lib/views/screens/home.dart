@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:full_hometasks/main.dart';
 import 'package:full_hometasks/views/screens/courses_screen.dart';
 import 'package:full_hometasks/views/screens/home_screen.dart';
+import 'package:full_hometasks/views/screens/notes_screen.dart';
 import 'package:full_hometasks/views/screens/profile_screen.dart';
 import 'package:full_hometasks/views/screens/settings_screen.dart';
-import 'package:full_hometasks/views/screens/notes_screen.dart';
 import 'package:full_hometasks/views/screens/todo_screen.dart';
 
 class MyHomeApp extends StatefulWidget {
@@ -24,7 +25,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   void initState() {
     super.initState();
     _screens.addAll([
-      const HomeScreen(),
+       HomeScreen(),
       const ProfileScreen(),
       SettingsScreen(
         isDarkMode: _isDarkMode,
@@ -125,7 +126,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                         builder = (BuildContext _) => _screens[_selectedIndex];
                         break;
                       case '/home':
-                        builder = (BuildContext _) => const HomeScreen();
+                        builder = (BuildContext _) =>  HomeScreen();
                         break;
                       case '/profile':
                         builder = (BuildContext _) => const ProfileScreen();
@@ -151,7 +152,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                                 });
                               },
                             );
-                        break;  
+                        break;
                       case '/courses':
                         builder = (BuildContext _) => const CoursesScreen();
                         break;

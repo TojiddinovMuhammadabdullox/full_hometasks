@@ -1,11 +1,10 @@
-// views/screens/login_screen.dart
 import 'package:flutter/material.dart';
-import 'package:full_hometasks/service/http_serviceauth.dart';
-import 'package:full_hometasks/views/screens/home_screen.dart';
+import 'package:full_hometasks/SERVICES/http_services.dart';
+import 'package:full_hometasks/views/screens/home.dart';
 import 'package:full_hometasks/views/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context,
           MaterialPageRoute(
             builder: (ctx) {
-              return const HomeScreen();
+              return const MyHomeApp();
             },
           ),
         );
@@ -89,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (newValue) {
+                  //? save email
                   email = newValue;
                 },
               ),
@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (newValue) {
+                  //? save password
                   password = newValue;
                 },
               ),
@@ -115,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : ElevatedButton(
+                  : FilledButton(
                       onPressed: submit,
                       child: const Text("KIRISH"),
                     ),
